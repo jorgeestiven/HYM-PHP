@@ -37,27 +37,72 @@ class PersonaController
     {
         try {
             $arrayPersona = array();
-            $arrayPersona['nombres'] = $_POST['nombres'];
-            $arrayPersona['apellidos'] = $_POST['apellidos'];
+            $arrayPersona['nombre'] = $_POST['nombre'];
+            $arrayPersona['apellido'] = $_POST['apellido'];
             $arrayPersona['tipoDocumento'] = $_POST['tipoDocumento'];
             $arrayPersona['documento'] = $_POST['documento'];
             $arrayPersona['correo'] = $_POST['correo'];
             $arrayPersona['telefono'] = $_POST['telefono'];
-            $arrayPersona['rol'] = 'Cliente';
+            $arrayPersona['rol'] = $_POST['rol'];
             $arrayPersona['direccion'] = $_POST['direccion'];
-            $arrayPersona['estado'] = 'activo';
+            $arrayPersona['estado'] = $_POST['estado'];
 
             if (!Persona::PersonaRegistrada($arrayPersona['documento'])) {
                 $Persona = new Persona ($arrayPersona);
-                if ($Persona->create()) {
-                    header("Location: ../../views/modules/persona/index.php?respuesta=correcto");
+                if ($Persona->save()) {
+                    header("Location: ../../views/modules/persona/index.php?action=create&respuesta=correcto");
                 }
             } else {
-                header("Location: ../../views/modules/persona/create.php?respuesta=error&mensaje=Usuario ya registrado");
+                header("Location: ../../views/modules/persona/create.php?respuesta=error&mensaje=Persona ya registrada");
             }
         } catch (Exception $e) {
             GeneralFunctions::console($e, 'error', 'errorStack');
             //header("Location: ../../views/modules/usuarios/create.php?respuesta=error&mensaje=" . $e->getMessage());
+        }
+    }
+
+    static public function edit()
+    {
+        try {
+            $arrayPersona = array();
+            $arrayPersona['nombre'] = $_POST['nombre'];
+            $arrayPersona['apellido'] = $_POST['apellido'];
+            $arrayPersona['tipoDocumento'] = $_POST['tipoDocumento'];
+            $arrayPersona['documento'] = $_POST['documento'];
+            $arrayPersona['correo'] = $_POST['correo'];
+            $arrayPersona['telefono'] = $_POST['telefono'];
+            $arrayPersona['rol'] = $_POST['rol'];
+            $arrayPersona['direccion'] = $_POST['direccion'];
+            $arrayPersona['estado'] = $_POST['estado'];
+            $arrayPersona['id'] = $_POST['id'];
+
+            $Persona = new Persona($arrayPersona);
+            $Persona->update();
+
+            header("Location: ../../views/modules/persona/show.php?id=" . $Persona->getId() . "&respuesta=correcto");
+        } catch (\Exception $e) {
+            GeneralFunctions::console($e, 'error', 'errorStack');
+            //header("Location: ../../views/modules/usuarios/edit.php?respuesta=error&mensaje=".$e->getMessage());
+        }
+    }
+
+    static public function searchForID($id)
+    {
+        try {
+            return Persona::searchForId($id);
+        } catch (\Exception $e) {
+            GeneralFunctions::console($e, 'error', 'errorStack');
+            //header("Location: ../../views/modules/personas/manager.php?respuesta=error");
+        }
+    }
+
+    static public function getAll()
+    {
+        try {
+            return Persona::getAll();
+        } catch (\Exception $e) {
+            GeneralFunctions::console($e, 'log', 'errorStack');
+            //header("Location: ../Vista/modules/persona/manager.php?respuesta=error");
         }
     }
 

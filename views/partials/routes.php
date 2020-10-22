@@ -11,7 +11,7 @@ $dotenv = Dotenv\Dotenv::create(__DIR__ ."../../../"); //Cargamos el archivo .en
 $dotenv->load(); //Carga las variables del archivo .env
 
 $baseURL = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST']."/".$_ENV['ROOT_FOLDER'];
-//https://localhost/EjemploComposer/
+//https://localhost/H&Mcomputadores/
 $adminlteURL = $baseURL."/vendor/almasaeed2010/adminlte";
-//https://localhost/EjemploComposer/vendor/almasaeed2010/adminlte
+//https://localhost/H&Mcomputadores/vendor/almasaeed2010/adminlte
 ?>

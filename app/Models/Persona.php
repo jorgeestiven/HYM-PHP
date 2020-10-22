@@ -25,6 +25,7 @@ class Persona extends BasicModel
     {
         //Propiedad recibida y asigna a una propiedad de la clase
         parent::__construct();
+        $this->setId($arrPersona['id'] ?? 0);
         $this->setNombre($arrPersona['nombre'] ?? "");
         $this->setApellido($arrPersona['apellido'] ?? "");
         $this->setTipoDocumento($arrPersona['tipoDocumento'] ?? "");
